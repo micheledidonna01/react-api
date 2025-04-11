@@ -1,0 +1,25 @@
+body{
+  background-color: rgb(194, 188, 188);
+}
+
+.contenitore {
+  gap: 20px;
+}
+
+.card {
+  width: calc((100% - 40px)/3);
+  border: 0;
+}
+
+img {
+  height: 300px;
+  object-fit:cover;
+}
+
+.list-group-item:hover {
+  background-color: rgb(141, 135, 135);
+}
+
+.list-group{
+  height: 100%;
+}

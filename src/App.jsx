@@ -17,28 +17,33 @@ function App() {
       .catch(err => console.log(err))
   }
 
+  let api2 = "https://www.freetestapi.com/api/v1/actresses";
+  const [actresses, setActress] = useState([]);
+
+  function fetchActress() {
+    axios.get(api2)
+      .then((res) => {
+        setActress(res.data);
+
+      })
+      .catch(err => console.log(err))
+  }
+
 
   useEffect(fetchAuthors, []);
+  useEffect(fetchActress, []);
   console.log(authors);
+  console.log(actresses);
+
   return (
     <>
+    <main className='bg-dark pt-5'>
+
+      <h1 className='text-light text-center bg-success p-3'>Lista di Attori</h1>
       <div className="contenitore d-flex flex-wrap my-5 mx-auto p-3">
+        
         {authors.map((author) =>
-          // // <div key={author.id} className='sotto-contenitore d-flex col-12 align-items-center'>
-          // //   <div className="image col-4">
-          // //     <img src={author.image} alt={author.name} className='card-img-left'/>
-          // //   </div>
-          // //   <ul className='list-group list-group-flush col-8'>
-          // //     <li className="list-group-item list-group-item-action list-group-item-primary">Nome: <strong>{author.name}</strong></li>
-          // //     <li className="list-group-item list-group-item-action list-group-item-secondary">Anno di nascita: <strong>{author.birth_year}</strong></li>
-          // //     <li className="list-group-item list-group-item-action list-group-item-success">Nazionalità: <strong>{author.nationality}</strong></li>
-          // //     <li className="list-group-item list-group-item-action list-group-item-info">Biografia: <strong>{author.biography}</strong></li>
-          // //     <li className="list-group-item list-group-item-action list-group-item-warning">Riconoscimenti: <strong>{author.awards}</strong></li>
-          // //   </ul>
-
-
-          // </div>
-          <div className="card">
+          <div className="card" key={author.id}>
             <img src={author.image} className="card-img-top" alt={author.title}/>
               <div className="card-body">
                 <h5 className="card-title">{author.name}</h5>
@@ -50,10 +55,32 @@ function App() {
               <li className="list-group-item"><strong>Awards: </strong>{author.awards}</li>
               </ul>
           </div>
+        
           
         )}
       </div>
 
+      <h1 className='text-center text-light bg-success p-3'>Lista di Attrici</h1>
+      <div className="contenitore d-flex flex-wrap my-5 mx-auto p-3">
+        {actresses.map((actress) =>
+          <div className="card" key={actress.id}>
+            <img src={actress.image} className="card-img-top" alt={actress.title}/>
+              <div className="card-body">
+                <h5 className="card-title">{actress.name}</h5>
+                <p className="card-text">{actress.biography}</p>
+              </div>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item"><strong>Nationality: </strong>{actress.nationality}</li>
+              <li className="list-group-item"><strong>Birth year: </strong>{actress.birth_year}</li>
+              <li className="list-group-item"><strong>Awards: </strong>{actress.awards}</li>
+              </ul>
+          </div>
+        
+          
+        )}
+      </div>
+
+    </main>
     </>
   )
 }

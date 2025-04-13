@@ -7,10 +7,13 @@ function App() {
 
   let api = "https://www.freetestapi.com/api/v1/actors";
   const [authors, setAuthors] = useState([]);
-    let api2 = "https://www.freetestapi.com/api/v1/actresses";
+  let api2 = "https://www.freetestapi.com/api/v1/actresses";
   const [actresses, setActress] = useState([]);
+
+  const [script, setScript] = useState('');
+
   function fetchAuthors() {
-    axios.get(api, api2)
+    axios.get(api)
       .then((res) => {
         setAuthors(res.data);
 
@@ -28,18 +31,46 @@ function App() {
       .catch(err => console.log(err))
   }
 
-
   useEffect(fetchAuthors, []);
   useEffect(fetchActress, []);
+  useEffect(()=>{
+    let result1 = authors;
+    let result2 = actresses;
+
+    if(script !== ""){
+      
+      result1 = result1.filter(res => res.name.includes(script));
+      result2 = result2.filter(res => res.name.includes(script));
+
+    }
+
+
+    setAuthors(result1);
+    setActress(result2);
+    result1 = authors;
+    result2 = actresses;
+  }, [script]);
   console.log(authors);
   console.log(actresses);
+
 
   return (
     <>
       <main className='bg-dark pt-5'>
 
         <h1 className='text-light text-center bg-success p-3'>Lista di Attori/Attrici</h1>
-        <div className="contenitore d-flex flex-wrap mx-auto p-3">
+        <div className='d-flex justify-content-end'>
+          <div className="col-3 m-4">
+            <input
+              type="text"
+              value={script}
+              onChange={(e) => setScript(e.target.value)}
+              placeholder='Name Actor or Actresses'
+              className='form-control'
+            />
+          </div>
+        </div>
+        <div className="contenitore d-flex flex-wrap mx-auto p-3 justify-content-center">
 
           {authors.map((author) =>
             <div className="card" key={author.id}>
